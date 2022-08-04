@@ -1,4 +1,4 @@
-const errorMiddleware = (err, _req, res, _next) => {
+const errorHandler = (err, _req, res, _next) => {
   if (err.status) return res.status(err.status).json({ message: err.message});
   console.error(err);
   return res
@@ -6,4 +6,4 @@ const errorMiddleware = (err, _req, res, _next) => {
     .json({message: 'Internal Error Server'});
 };
 
-module.exports = errorMiddleware;
+module.exports = errorHandler;
