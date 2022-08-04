@@ -3,10 +3,9 @@ const {
   Model
 } = require('sequelize');
 const sales = require('./sales');
-const users = require('./users');
 
 module.exports = (sequelize, DataTypes) => {
-  class SalesProducts extends Model {
+  class salesProducts extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -16,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  SalesProducts.init({
-    sale_id: DataTypes.NUMBER,
-    product_id: DataTypes.NUMBER,
+  salesProducts.init({
+    saleId: DataTypes.NUMBER,
+    productId: DataTypes.NUMBER,
     quantity: DataTypes.NUMBER
   }, {
     sequelize,
@@ -28,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  SalesProducts.belongsTo(sales, {foreignKey: 'sale_id', as: 'saleId'})
-  SalesProducts.belongsTo(sales, {foreignKey: 'product_id', as: 'productId'})
+  salesProducts.belongsTo(sales, {foreignKey: 'sale_id', as: 'saleId'})
+  salesProducts.belongsTo(sales, {foreignKey: 'product_id', as: 'productId'})
 
-  return SalesProducts;
+  return salesProducts;
 };
