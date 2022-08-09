@@ -16,7 +16,7 @@ function Login() {
           email,
           password,
         });
-      if (response.data.role === 'administrator') return navigate('');
+      if (response.data.role === 'administrator') return navigate('/admin/manage');
       if (response.data.role === 'seller') return navigate('');
       return navigate('');
     } catch (error) {
