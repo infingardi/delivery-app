@@ -2,6 +2,6 @@ const { Router } = require('express');
 
 const user = Router();
 
-user.get('/', )
+user.get('/');
 
 module.exports = user;

@@ -1,5 +1,5 @@
-const setSessionStorage = (key, item) => {
+const setLocalStorage = (key, item) => {
   localStorage.setItem(key, JSON.stringify(item));
 };
 
-export default setSessionStorage;
+export default setLocalStorage;
