@@ -1,11 +1,13 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validLogin, setValidLogin] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(true);
+
   const navigate = useNavigate();
 
   const onSubmitLogin = () => {
@@ -17,8 +19,8 @@ function Login() {
           password,
         });
       if (response.data.role === 'administrator') return navigate('/admin/manage');
-      if (response.data.role === 'seller') return navigate('');
-      return navigate('');
+      if (response.data.role === 'seller') return navigate('/seller');
+      return navigate('/user');
     } catch (error) {
       setValidLogin(true);
     }
@@ -26,15 +28,22 @@ function Login() {
 
   const validateFields = () => {
     const regexEmail = /\S+@\S+\.\S+/;
-    const minPasswordLength = 6;
-    if (regexEmail.test(email) || password.length < minPasswordLength) {
-      return setValidLogin(true);
+    const minPasswordLength = 5;
+    if (regexEmail.test(email) && password.length > minPasswordLength) {
+      return setDisableBtn(false);
     }
-    onSubmitLogin();
+    return setDisableBtn(true);
   };
 
+  useEffect(() => { validateFields(); }, [email, password]);
+
   const onSubmitRegistration = () => {
-    navigate('');
+    navigate('/register');
+  };
+
+  const handleChange = (event, setAttr) => {
+    setValidLogin(false);
+    setAttr(event.target.value);
   };
 
   return (
@@ -45,7 +54,7 @@ function Login() {
           <input
             id="login"
             value={ email }
-            onChange={ (e) => { setValidLogin(false); setEmail(e.target.value); } }
+            onChange={ (e) => handleChange(e, setEmail) }
             placeholder="Digite seu usuário"
             data-testid="1"
           />
@@ -55,15 +64,16 @@ function Login() {
           <input
             id="password"
             value={ password }
-            onChange={ (e) => { setValidLogin(false); setPassword(e.target.value); } }
+            onChange={ (e) => handleChange(e, setPassword) }
             type="password"
             data-testid="2"
           />
         </label>
         <button
           type="submit"
-          onClick={ validateFields }
+          onClick={ onSubmitLogin }
           data-testid="3"
+          disabled={ disableBtn }
         >
           Login
         </button>
