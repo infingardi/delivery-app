@@ -2,7 +2,7 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('products', [{
+    await queryInterface.bulkInsert('Products', [{
       name: 'Skol Lata 250ml',
       price: 2.20,
       url_image: 'http://localhost:3001/images/skol_lata_350ml.jpg',
@@ -50,6 +50,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('products', null, {});
+    await queryInterface.bulkDelete('Products', null, {});
   }
 };

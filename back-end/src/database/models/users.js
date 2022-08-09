@@ -1,27 +1,17 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class users extends Model {
 
-  }
-  users.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
+module.exports = (sequelize, DataTypes) => {
+  console.log(sequelize, DataTypes);
+  const User = sequelize.define('User', {
+    id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     role: DataTypes.STRING
   }, {
-    sequelize,
-    modelName: 'users',
-    underscored: true,
-    sequelize: db,
     timestamps: false,
+    tableName: 'Users',
+    underscored: true,
   });
-  return users;
+
+  return User;
 };
