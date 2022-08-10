@@ -1,9 +1,6 @@
 const express = require('express');
-<<<<<<< HEAD
-
-=======
 const cors = require('cors');
->>>>>>> 9dfcbae26dc9f39918c12daf404870879ff02832
+
 const errorHandler = require('./middleware/errorHandler');
 const route = require('./routes');
 require('express-async-errors');
