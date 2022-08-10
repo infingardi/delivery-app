@@ -11,22 +11,6 @@ function Login() {
 
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  const onSubmitLogin = () => {
-    try {
-      const response = axios
-        .get('http://localhost:3001/login')
-        .send({
-          email,
-          password,
-        });
-      if (response.data.role === 'administrator') return navigate('/admin/manage');
-      if (response.data.role === 'seller') return navigate('/seller');
-      return navigate('');
-    } catch (error) {
-      setValidLogin(true);
-    }
-=======
   useEffect(() => {
     const validateFields = () => {
       const regexEmail = /\S+@\S+\.\S+/;
@@ -46,7 +30,6 @@ function Login() {
     if (response.data.role === 'administrator') return navigate('/admin/manage');
     if (response.data.role === 'seller') return navigate('/seller');
     return navigate('/customer/products');
->>>>>>> 9dfcbae26dc9f39918c12daf404870879ff02832
   };
 
   const onSubmitLogin = async () => {
