@@ -1,13 +1,17 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import setLocalStorage from '../services/setLocalStorage';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validLogin, setValidLogin] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(true);
+
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const onSubmitLogin = () => {
     try {
       const response = axios
@@ -22,19 +26,39 @@ function Login() {
     } catch (error) {
       setValidLogin(true);
     }
+=======
+  useEffect(() => {
+    const validateFields = () => {
+      const regexEmail = /\S+@\S+\.\S+/;
+      const minPasswordLength = 5;
+      if (regexEmail.test(email) && password.length > minPasswordLength) {
+        return setDisableBtn(false);
+      }
+      return setDisableBtn(true);
+    };
+
+    validateFields();
+  }, [email, password]);
+
+  const sucessLogin = (response) => {
+    setLocalStorage('user', response.data);
+
+    if (response.data.role === 'administrator') return navigate('/admin/manage');
+    if (response.data.role === 'seller') return navigate('/seller');
+    return navigate('/customer/products');
+>>>>>>> 9dfcbae26dc9f39918c12daf404870879ff02832
   };
 
-  const validateFields = () => {
-    const regexEmail = /\S+@\S+\.\S+/;
-    const minPasswordLength = 6;
-    if (regexEmail.test(email) || password.length < minPasswordLength) {
-      return setValidLogin(true);
-    }
-    onSubmitLogin();
+  const onSubmitLogin = async () => {
+    axios
+      .post('http://localhost:3001/login', { email, password })
+      .then((response) => sucessLogin(response))
+      .catch(() => setValidLogin(true));
   };
 
-  const onSubmitRegistration = () => {
-    navigate('');
+  const handleChange = (event, setAttr) => {
+    setValidLogin(false);
+    setAttr(event.target.value);
   };
 
   return (
@@ -45,9 +69,9 @@ function Login() {
           <input
             id="login"
             value={ email }
-            onChange={ (e) => { setValidLogin(false); setEmail(e.target.value); } }
+            onChange={ (e) => handleChange(e, setEmail) }
             placeholder="Digite seu usuário"
-            data-testid="1"
+            data-testid="common_login__input-email"
           />
         </label>
         <label htmlFor="password">
@@ -55,27 +79,34 @@ function Login() {
           <input
             id="password"
             value={ password }
-            onChange={ (e) => { setValidLogin(false); setPassword(e.target.value); } }
+            onChange={ (e) => handleChange(e, setPassword) }
             type="password"
-            data-testid="2"
+            data-testid="common_login__input-password"
           />
         </label>
         <button
           type="submit"
-          onClick={ validateFields }
-          data-testid="3"
+          onClick={ onSubmitLogin }
+          data-testid="common_login__button-login"
+          disabled={ disableBtn }
         >
           Login
         </button>
         <button
           type="submit"
-          onClick={ onSubmitRegistration }
-          data-testid="4"
+          onClick={ () => navigate('/register') }
+          data-testid="common_login__button-register"
         >
           Ainda não tenho conta
         </button>
       </form>
-      {validLogin && <h3 data-testid="5">Login Inválido</h3>}
+      { validLogin && (
+        <h3
+          data-testid="common_login__element-invalid-email"
+        >
+          Login Inválido
+        </h3>
+      ) }
     </main>
   );
 }
