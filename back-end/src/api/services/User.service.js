@@ -1,6 +1,6 @@
 const md5 = require('md5');
-const { User } = require('../../database/models');
 const jwt = require('jsonwebtoken');
+const { User } = require('../../database/models');
 
 async function validateLogin(emailLogin, password) {
   const convertedPassword = md5(password).toString();
@@ -11,11 +11,11 @@ async function validateLogin(emailLogin, password) {
 }
 
 function createToken(user) {
-  const token = jwt.sign({...user}, 'password');
+  const token = jwt.sign({ ...user }, 'password');
   return token;
 }
 
 module.exports = {
   validateLogin,
-  createToken
+  createToken,
 };
