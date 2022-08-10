@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import setLocalStorage from '../services/setLocalStorage';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -10,35 +11,32 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const onSubmitLogin = () => {
-    try {
-      const response = axios
-        .get('http://localhost:3001/login')
-        .send({
-          email,
-          password,
-        });
-      if (response.data.role === 'administrator') return navigate('/admin/manage');
-      if (response.data.role === 'seller') return navigate('/seller');
-      return navigate('/user');
-    } catch (error) {
-      setValidLogin(true);
-    }
+  useEffect(() => {
+    const validateFields = () => {
+      const regexEmail = /\S+@\S+\.\S+/;
+      const minPasswordLength = 5;
+      if (regexEmail.test(email) && password.length > minPasswordLength) {
+        return setDisableBtn(false);
+      }
+      return setDisableBtn(true);
+    };
+
+    validateFields();
+  }, [email, password]);
+
+  const sucessLogin = (response) => {
+    setLocalStorage('user', response.data);
+
+    if (response.data.role === 'administrator') return navigate('/admin/manage');
+    if (response.data.role === 'seller') return navigate('/seller');
+    return navigate('/customer/products');
   };
 
-  const validateFields = () => {
-    const regexEmail = /\S+@\S+\.\S+/;
-    const minPasswordLength = 5;
-    if (regexEmail.test(email) && password.length > minPasswordLength) {
-      return setDisableBtn(false);
-    }
-    return setDisableBtn(true);
-  };
-
-  useEffect(() => { validateFields(); }, [email, password]);
-
-  const onSubmitRegistration = () => {
-    navigate('/register');
+  const onSubmitLogin = async () => {
+    axios
+      .post('http://localhost:3001/login', { email, password })
+      .then((response) => sucessLogin(response))
+      .catch(() => setValidLogin(true));
   };
 
   const handleChange = (event, setAttr) => {
@@ -56,7 +54,7 @@ function Login() {
             value={ email }
             onChange={ (e) => handleChange(e, setEmail) }
             placeholder="Digite seu usuário"
-            data-testid="1"
+            data-testid="common_login__input-email"
           />
         </label>
         <label htmlFor="password">
@@ -66,26 +64,32 @@ function Login() {
             value={ password }
             onChange={ (e) => handleChange(e, setPassword) }
             type="password"
-            data-testid="2"
+            data-testid="common_login__input-password"
           />
         </label>
         <button
           type="submit"
           onClick={ onSubmitLogin }
-          data-testid="3"
+          data-testid="common_login__button-login"
           disabled={ disableBtn }
         >
           Login
         </button>
         <button
           type="submit"
-          onClick={ onSubmitRegistration }
-          data-testid="4"
+          onClick={ () => navigate('/register') }
+          data-testid="common_login__button-register"
         >
           Ainda não tenho conta
         </button>
       </form>
-      {validLogin && <h3 data-testid="5">Login Inválido</h3>}
+      { validLogin && (
+        <h3
+          data-testid="common_login__element-invalid-email"
+        >
+          Login Inválido
+        </h3>
+      ) }
     </main>
   );
 }
