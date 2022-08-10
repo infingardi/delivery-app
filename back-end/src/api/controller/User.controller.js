@@ -7,7 +7,7 @@ const validateLoginController = async (req, res, next) => {
   if (!user) return next(statusMessage(404, 'Not found'));
 
   const token = createToken(user);
-  return res.status(200).json({...user, token});
+  return res.status(200).json({ ...user, token });
 };
 
 module.exports = {
