@@ -1,5 +1,4 @@
 const { Router } = require('express');
-const { router } = require('../app');
 const user = require('./users.route');
 const admin = require('./admin.route');
 

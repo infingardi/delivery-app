@@ -1,8 +1,10 @@
 const express = require('express');
 
 const errorHandler = require('./middleware/errorHandler');
-const { route } = require('./routes');
+const route = require('./routes');
+
 require('express-async-errors');
+
 const app = express();
 
 app.use(express.json());

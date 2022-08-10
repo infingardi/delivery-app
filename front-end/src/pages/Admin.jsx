@@ -1,111 +1,46 @@
-// import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-// import Header from '../components/Header';
-// import setLocalStorage from '../../services/localStorage';
-// // import CadastroBtn from '../components/CadastroBtn';
-// // import DeleteBtn from '../components/DeleteBtn';
-// // import { requestRegister } from '../services/requests';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getLocalStorage } from '../services/localStorage';
+import FormRegister from '../components/FormRegister';
 
-// export default function Admin() {
-//   const [name, setName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [isRegistered, setIsRegistered] = useState(false);
-//   const [failedTryRegister, setFailedTryRegister] = useState(false);
+export default function Admin() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const verifyRole = () => {
+      const user = getLocalStorage('user');
+      if (user.role !== 'admin') return navigate('/');
+    };
+    verifyRole();
+  }, []);
 
-//   const admin = async (event) => {
-//     event.preventDefault();
+  const onSubmitRegister = async (name, email, password) => {
+    await axios.post('http://localhost:3001/admin/manage', {
+      name,
+      email,
+      password,
+    });
+  };
 
-//     try {
-//       const endpoint = '/admin/manage';
+  const dataTestIds = {
+    1: 'admin_manage__input_name',
+    2: 'admin_manage__input_email',
+    3: 'admin_manage__input_password',
+    4: 'admin_manage__button_register',
+  };
 
-//       const { token, user } = await requestRegister(endpoint, { name, email, password });
-
-//       setLocalStorage.setItem('user', JSON.stringify({ token, ...user }));
-//       setIsRegistered(true);
-//     } catch (err) {
-//       setFailedTryRegister(true);
-//       setIsRegistered(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     setFailedTryRegister(false);
-//   }, [name, email, password]);
-
-//   if (isRegistered) return <Link to="/admin/manage" />;
-
-//   return (
-//     <>
-//       <Header
-//         page="Admin"
-//         FirstNavigationLink="oi1"
-//         SecondNavegationLink="oi2"
-//       />
-//       <section className="">
-//         <form>
-//           <h1>Cadastrar novo usuário</h1>
-//           <label htmlFor="Input-name">
-//             <input
-//               className=""
-//               type="text"
-//               value={ name }
-//               onChange={ ({ target: { value } }) => setName(value) }
-//               data-testid="admin_manage__input_name"
-//               placeholder="Nome e sobrenome"
-//             />
-//           </label>
-//           <label htmlFor="Input-email">
-//             <input
-//               type="email"
-//               value={ email }
-//               onChange={ ({ target: { value } }) => setEmail(value) }
-//               data-testid="admin_manage__input_email"
-//               placeholder="seu-email@site.com.br"
-//             />
-//           </label>
-//           <label htmlFor="Input-password">
-//             <input
-//               type="password"
-//               value={ password }
-//               onChange={ ({ target: { value } }) => setPassword(value) }
-//               data-testid="admin_manage__input_password"
-//               placeholder="*********"
-//             />
-//           </label>
-//           <select
-//             data-testid="admin_manage__select_role"
-//             type="select"
-//             // onClick={ (event) => login(event) }
-//             placeholder="Vendedor"
-//           >
-//             CADASTRAR
-//           </select>
-//           {
-//             (failedTryRegister)
-//               ? (
-//                 <p data-testid="">
-//                   Os dados estão incorretos. Por favor, tente novamente.
-//                 </p>
-//               )
-//               : null
-//           }
-//           <button
-//             data-testid="admin_manage__button_register"
-//             type="submit"
-//             onClick={ (event) => admin(event) }
-//           >
-//             CADASTRAR
-//           </button>
-//           <button
-//             data-testid="admin_manage__element_user-table-remove"
-//             type="submit"
-//             onClick={ (event) => admin(event) }
-//           >
-//             EXCLUIR
-//           </button>
-//         </form>
-//       </section>
-//     </>
-//   );
-// }
+  return (
+    <main>
+      <section className="Formulário cadastro">
+        <FormRegister dataTestIds={ dataTestIds } onSubmitRegister={ onSubmitRegister } />
+        {/* <button
+            type="submit"
+            onClick={  }
+            data-testid="admin_manage__element_user-table-remove"
+          >
+            EXCLUIR
+          </button> */}
+      </section>
+    </main>
+  );
+}
