@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { validateLoginController } = require('../controller/CreateUser.controller');
+const { validateLoginController } = require('../controller/User.controller');
 
 const admin = Router();
 

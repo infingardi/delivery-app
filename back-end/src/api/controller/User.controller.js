@@ -1,5 +1,5 @@
 const { statusMessage } = require('../utils/functions');
-const service = require('../services/CreateUser.service');
+const service = require('../services/User.service');
 
 const validateLogin = async (req, res, next) => {
   const { email, password } = req.body;
@@ -16,7 +16,7 @@ const createCustomer = async (req, res, _next) => {
   return res.status(201).json();
 };
 
-const validateUser = async (req, res, next) => {
+const validateUser = async (req, _res, next) => {
   const { email, name } = req.body;
   const user = await service.validateNameOrEmail(name, email);
   if (user) next(statusMessage(409, 'Already registered'));
