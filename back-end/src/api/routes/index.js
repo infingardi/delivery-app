@@ -6,8 +6,7 @@ const create = require('./create.route');
 
 const route = Router();
 
-route.use('/login', user);
-route.use('create', create);
+route.use('/', user);
 route.use('/product', product);
 route.use('/admin/manage', admin);
 

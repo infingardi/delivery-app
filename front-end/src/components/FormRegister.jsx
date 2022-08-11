@@ -32,6 +32,7 @@ function FormRegister(props) {
 
   return (
     <form onSubmit={ (event) => event.preventDefault() }>
+      {console.log(dataTestIds)}
       <h2>Cadastrar novo usuário</h2>
       <label htmlFor="Input-name">
         <input
@@ -39,7 +40,7 @@ function FormRegister(props) {
           value={ name }
           onChange={ (e) => handleChange(e, setName) }
           placeholder="Nome e sobrenome"
-          data-testid={ dataTestIds.input }
+          data-testid="admin_manage__input-name"
         />
       </label>
       <label htmlFor="Input-email">
@@ -49,7 +50,7 @@ function FormRegister(props) {
           value={ email }
           onChange={ (e) => handleChange(e, setEmail) }
           placeholder="seu-email@site.com.br"
-          data-testid={ dataTestIds.email }
+          data-testid="admin_manage__input-email"
         />
       </label>
       <label htmlFor="Input-password">
@@ -59,11 +60,11 @@ function FormRegister(props) {
           value={ password }
           onChange={ (e) => handleChange(e, setPassword) }
           placeholder="*********"
-          data-testid={ dataTestIds.password }
         />
       </label>
+
       <button
-        data-testid={ dataTestIds.button }
+        data-testid="admin_manage__button-register"
         type="submit"
         onClick={ () => onSubmitRegister(name, email, password) }
         disabled={ validRegister }

@@ -11,6 +11,10 @@ async function validateLogin(emailLogin, password) {
   return { email, name, role };
 }
 
+async function createUser(name, email, password, role) {
+  await User.create({ name, email, password, role });
+}
+
 function createToken(user) {
   const token = jwt.sign({ ...user }, 'secret_key');
   return token;
@@ -23,6 +27,7 @@ const validateNameOrEmail = (name, email) => {
 
 module.exports = {
   validateLogin,
+  createUser,
   createToken,
   validateNameOrEmail,
 };

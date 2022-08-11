@@ -13,6 +13,7 @@ function Login() {
   // Remove dados do usuário ao entrar na pagina de login (logout)
   useEffect(() => {
     localStorage.removeItem('user');
+    localStorage.removeItem('carrinho');
   }, []);
 
   useEffect(() => {
