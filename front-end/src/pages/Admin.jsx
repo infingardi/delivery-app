@@ -7,6 +7,7 @@ import FormRegister from '../components/FormRegister';
 export default function Admin() {
   const [role, setRole] = useState('');
   const [users, setUsers] = useState('');
+  console.log(users);
   const navigate = useNavigate();
 
   const url = 'http://localhost:3001/admin/manage';
@@ -31,12 +32,12 @@ export default function Admin() {
     });
   };
 
-  const onDeleteUser = async (nameDlt, emailDlt) => {
-    await axios.delete(url, {
-      name: nameDlt,
-      email: emailDlt,
-    });
-  };
+  // const onDeleteUser = async (nameDlt, emailDlt) => {
+  //   await axios.delete(url, {
+  //     name: nameDlt,
+  //     email: emailDlt,
+  //   });
+  // };
 
   const dataTestIds = {
     1: 'admin_manage__input_name',
