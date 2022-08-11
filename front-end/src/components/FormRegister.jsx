@@ -39,7 +39,7 @@ function FormRegister(props) {
           value={ name }
           onChange={ (e) => handleChange(e, setName) }
           placeholder="Nome e sobrenome"
-          data-testid={ dataTestIds['1'] }
+          data-testid={ dataTestIds.input }
         />
       </label>
       <label htmlFor="Input-email">
@@ -49,7 +49,7 @@ function FormRegister(props) {
           value={ email }
           onChange={ (e) => handleChange(e, setEmail) }
           placeholder="seu-email@site.com.br"
-          data-testid={ dataTestIds['2'] }
+          data-testid={ dataTestIds.email }
         />
       </label>
       <label htmlFor="Input-password">
@@ -59,26 +59,19 @@ function FormRegister(props) {
           value={ password }
           onChange={ (e) => handleChange(e, setPassword) }
           placeholder="*********"
-          data-testid={ dataTestIds['3'] }
+          data-testid={ dataTestIds.password }
         />
       </label>
-      <select
-        data-testid="admin_manage__select_role"
-        type="select"
-        // onClick={ (event) => login(event) }
-        placeholder="Vendedor"
-      >
-        Tipo
-      </select>
       <button
-        data-testid={ dataTestIds['4'] }
+        data-testid={ dataTestIds.button }
         type="submit"
         onClick={ () => onSubmitRegister(name, email, password) }
         disabled={ validRegister }
       >
         CADASTRAR
       </button>
-      { invalidRegister && <h2>Dados inválidos</h2> }
+      { invalidRegister
+      && (<h2 data-testid={ dataTestIds.invalidFields }>Dados inválidos</h2>) }
     </form>
   );
 }
