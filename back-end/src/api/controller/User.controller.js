@@ -1,7 +1,7 @@
 const { statusMessage } = require('../utils/functions');
 const service = require('../services/User.service');
 
-const validateLoginController = async (req, res, next) => {
+const validateLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await service.validateLogin(email, password);
   if (!user) return next(statusMessage(404, 'Not found'));
@@ -10,13 +10,13 @@ const validateLoginController = async (req, res, next) => {
   return res.status(200).json({ ...user, token });
 };
 
-const createUser = async (req, res, _next) => {
+const createCustomer = async (req, res, _next) => {
   const { email, password, name } = req.body;
   await service.createUser(name, email, password, 'customer');
   return res.status(201).json();
 };
 
 module.exports = {
-  validateLoginController,
-  createUser,
+  validateLogin,
+  createCustomer,
 };
