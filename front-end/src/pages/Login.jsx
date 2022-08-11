@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import setLocalStorage from '../services/setLocalStorage';
+import { setLocalStorage } from '../services/localStorage';
 
 function Login() {
   const [email, setEmail] = useState('');
