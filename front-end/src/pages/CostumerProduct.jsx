@@ -17,7 +17,7 @@ function CostumerProduct() {
     <CardProduct
       key={ id }
       name={ name }
-      price={ price }
+      price={ price.replace('.', ',') }
       image={ urlImage }
       id={ id }
     />
