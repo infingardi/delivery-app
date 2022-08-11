@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function CardProduct({ name, price, image, id }) {
   const [quantity, setQuantity] = useState(0);
 
-  const verifyValidQuantity = () => {
-    if (quantity >= 1) setQuantity(quantity - 1);
+  const verifyValidQuantity = (value) => {
+    const reg = /\d+/g;
+    if (value === '') setQuantity(0);
+    if (typeof value === 'string') value = parseInt(value, 10);
+    if (value >= 0 && reg.test(value)) setQuantity(value);
   };
+
+  useEffect(() => {
+    // Cria o localStorage do carrinha de compras, ou cria caso não exista
+    const priceFloat = price.replace(',', '.'); // Retira a , e coloca . (para ficar no formato correto)
+    const cartJson = JSON.parse(localStorage.getItem('carrinho')) || {};
+    cartJson[name] = { quantity, price: (quantity * parseFloat(priceFloat)).toFixed(2) };
+
+    localStorage.setItem('carrinho', JSON.stringify(cartJson));
+  }, [quantity]);
 
   return (
     <main>
@@ -22,20 +34,20 @@ function CardProduct({ name, price, image, id }) {
       <button
         data-testid={ `customer_products__button-card-rm-item-${id}` }
         type="button"
-        onClick={ () => verifyValidQuantity() }
+        onClick={ () => verifyValidQuantity(quantity - 1) }
       >
         -
       </button>
       <input
         data-testid={ `customer_products__input-card-quantity-${id}` }
-        readOnly
         type="text"
         value={ quantity }
+        onChange={ ({ target }) => verifyValidQuantity(target.value) }
       />
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }
         type="button"
-        onClick={ () => setQuantity(quantity + 1) }
+        onClick={ () => verifyValidQuantity(quantity + 1) }
       >
         +
       </button>
