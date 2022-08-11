@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function CardProduct({ name, price, image, id }) {
+function CardProduct({ name, price, image, id, changeTotalPrice }) {
   const [quantity, setQuantity] = useState(0);
 
   const verifyValidQuantity = (value) => {
@@ -13,18 +13,18 @@ function CardProduct({ name, price, image, id }) {
 
   useEffect(() => {
     // Cria o localStorage do carrinha de compras, ou cria caso não exista
-    const priceFloat = price.replace(',', '.'); // Retira a , e coloca . (para ficar no formato correto)
     const cartJson = JSON.parse(localStorage.getItem('carrinho')) || {};
-    cartJson[name] = { quantity, price: (quantity * parseFloat(priceFloat)).toFixed(2) };
+    cartJson[name] = { quantity, price };
 
     localStorage.setItem('carrinho', JSON.stringify(cartJson));
+    changeTotalPrice();
   }, [quantity]);
 
   return (
     <main>
       <h2 data-testid={ `customer_products__element-card-title-${id}` }>{name}</h2>
       <h3 data-testid={ `customer_products__element-card-price-${id}` }>
-        {price}
+        { price.replace('.', ',') }
       </h3>
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
@@ -60,6 +60,7 @@ CardProduct.propTypes = {
   price: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  changeTotalPrice: PropTypes.func.isRequired,
 };
 
 export default CardProduct;
