@@ -16,7 +16,13 @@ function createToken(user) {
   return token;
 }
 
+const validateNameOrEmail = (name, email) => {
+  const user = User.findOne({ where: { $or: [{ email }, { name }] } });
+  return user;
+};
+
 module.exports = {
   validateLogin,
   createToken,
+  validateNameOrEmail,
 };

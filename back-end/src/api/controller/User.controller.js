@@ -16,7 +16,15 @@ const createCustomer = async (req, res, _next) => {
   return res.status(201).json();
 };
 
+const validateUser = async (req, res, next) => {
+  const { email, name } = req.body;
+  const user = await service.validateNameOrEmail(name, email);
+  if (user) next(statusMessage(409, 'Already registered'));
+  next();
+};
+
 module.exports = {
   validateLogin,
   createCustomer,
+  validateUser,
 };
