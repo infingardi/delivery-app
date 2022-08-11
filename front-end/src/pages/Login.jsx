@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import setLocalStorage from '../services/setLocalStorage';
+import { setLocalStorage } from '../services/localStorage';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -13,6 +13,7 @@ function Login() {
   // Remove dados do usuário ao entrar na pagina de login (logout)
   useEffect(() => {
     localStorage.removeItem('user');
+    localStorage.removeItem('carrinho');
   }, []);
 
   useEffect(() => {
