@@ -11,7 +11,7 @@ async function validateLogin(emailLogin, password) {
 }
 
 function createToken(user) {
-  const token = jwt.sign({ ...user }, 'password');
+  const token = jwt.sign({ ...user }, 'secret_key');
   return token;
 }
 
