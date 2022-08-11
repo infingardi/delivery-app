@@ -12,7 +12,6 @@ function CardProduct({ name, price, image, id }) {
     <main>
       <h2 data-testid={ `customer_products__element-card-title-${id}` }>{name}</h2>
       <h3 data-testid={ `customer_products__element-card-price-${id}` }>
-        R$
         {price}
       </h3>
       <img

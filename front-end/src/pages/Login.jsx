@@ -10,6 +10,10 @@ function Login() {
   const [disableBtn, setDisableBtn] = useState(true);
 
   const navigate = useNavigate();
+  // Remove dados do usuário ao entrar na pagina de login (logout)
+  useEffect(() => {
+    localStorage.removeItem('user');
+  }, []);
 
   useEffect(() => {
     const validateFields = () => {
