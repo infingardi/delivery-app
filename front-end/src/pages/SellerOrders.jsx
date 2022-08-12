@@ -8,7 +8,7 @@ function SellerOrders() {
 
   useEffect(() => {
     axios
-      .get('localhost:3001/seller/orders')
+      .get('http://localhost:3001/seller/orders')
       .then((response) => setSales(response.data));
   }, []);
   return (

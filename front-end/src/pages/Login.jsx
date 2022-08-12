@@ -33,7 +33,7 @@ function Login() {
     setLocalStorage('user', response.data);
 
     if (response.data.role === 'administrator') return navigate('/admin/manage');
-    if (response.data.role === 'seller') return navigate('/seller');
+    if (response.data.role === 'seller') return navigate('/seller/orders');
     return navigate('/customer/products');
   };
 
