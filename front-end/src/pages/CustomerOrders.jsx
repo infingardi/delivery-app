@@ -1,9 +1,11 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import NavBarCustomer from '../components/NavBarCustomer';
 
 function CustomerOrders() {
   const [user, setUser] = useState();
   const [purchases, setPurchases] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = getLocalStorage('user');
@@ -38,7 +40,6 @@ function CustomerOrders() {
           <p>{p.name}</p>
           <p>{p.totalPrice}</p>
           <p>{p.status}</p>
-          <p>{p.quantity}</p>
         </div>
       ))}
     </main>
