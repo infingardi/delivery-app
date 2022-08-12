@@ -1,8 +1,8 @@
 const { Router } = require('express');
-const { validateLoginController } = require('../controller/CreateUser.controller');
+const Controller = require('../controller/User.controller');
 
 const admin = Router();
 
-admin.get('/manage', validateLoginController);
+admin.post('/', Controller.validateUser, Controller.createAdmin);
 
 module.exports = admin;

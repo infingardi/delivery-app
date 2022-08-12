@@ -6,9 +6,9 @@ const sales = require('./sales.route');
 
 const route = Router();
 
-route.use('/login', user);
 route.use('/product', product);
 route.use('/admin/manage', admin);
 route.use('/seller/orders', sales);
+route.use('/', user);
 
 module.exports = route;
