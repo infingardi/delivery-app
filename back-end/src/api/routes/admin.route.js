@@ -5,5 +5,4 @@ const admin = Router();
 
 admin.get('/', Controller.createAdmin);
 
-
 module.exports = admin;
