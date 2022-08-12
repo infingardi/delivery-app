@@ -1,7 +1,7 @@
-const { Sales } = require('../../database/models');
+const { Sale } = require('../../database/models');
 
  async function getAllSellers() {
-    const sales = await Sales.findAll();
+    const sales = await Sale.findAll();
     return sales;
 }
 
