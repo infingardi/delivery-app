@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { setLocalStorage } from '../services/localStorage';
 
 function Register() {
   const [name, setName] = useState('');
@@ -7,6 +9,7 @@ function Register() {
   const [password, setPassword] = useState('');
   const [validRegister, setValidRegister] = useState(true);
   const [invalidRegister, setInvalidRegister] = useState(false);
+  const navigate = useNavigate();
 
   const dataTestIds = {
     name: 'common_register__input-name',
@@ -36,12 +39,18 @@ function Register() {
     setAttr(event.target.value);
   };
 
+  const sucessCreateUser = (response) => {
+    setLocalStorage('user', response.data);
+    return navigate('/customer/products');
+  };
+
   const onSubmitRegister = async () => {
     await axios.post('http://localhost:3001/register', {
       name,
       email,
       password,
-    });
+    }).then((response) => sucessCreateUser(response))
+      .catch(() => setInvalidRegister(true));
   };
 
   return (

@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const { validateLoginController } = require('../controller/User.controller');
+const Controller = require('../controller/User.controller');
 
 const admin = Router();
 
-admin.get('/', validateLoginController);
+admin.get('/', Controller.createAdmin);
 
 
 module.exports = admin;

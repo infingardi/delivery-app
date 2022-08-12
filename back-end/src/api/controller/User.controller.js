@@ -13,7 +13,9 @@ const validateLogin = async (req, res, next) => {
 const createCustomer = async (req, res, _next) => {
   const { email, password, name } = req.body;
   await service.createUser(name, email, password, 'customer');
-  return res.status(201).json();
+  const token = service.createToken({ email, password, name, role: 'customer' });
+
+  return res.status(201).json({ token });
 };
 
 const validateUser = async (req, _res, next) => {

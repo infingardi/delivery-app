@@ -1,5 +1,6 @@
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
+const { Op } = require("sequelize");
 const { User } = require('../../database/models');
 
 async function validateLogin(emailLogin, password) {
@@ -12,7 +13,8 @@ async function validateLogin(emailLogin, password) {
 }
 
 async function createUser(name, email, password, role) {
-  await User.create({ name, email, password, role });
+  const md5Password = md5(password).toString();
+  await User.create({ name, email, password: md5Password, role });
 }
 
 function createToken(user) {
@@ -21,7 +23,7 @@ function createToken(user) {
 }
 
 const validateNameOrEmail = (name, email) => {
-  const user = User.findOne({ where: { $or: [{ email }, { name }] } });
+  const user = User.findOne({ where: { [Op.or]: [{ email }, { name }] } });
   return user;
 };
 
