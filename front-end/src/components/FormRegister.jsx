@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 
 function FormRegister(props) {
   const { dataTestIds, onSubmitRegister } = props;
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validRegister, setValidRegister] = useState(true);
   const [invalidRegister, setInvalidRegister] = useState(false);
-
   useEffect(() => {
     const validateFields = () => {
       const minNameLength = 11;
@@ -21,15 +19,12 @@ function FormRegister(props) {
       }
       setValidRegister(true);
     };
-
     validateFields();
   }, [email, password, name]);
-
   const handleChange = (event, setAttr) => {
     setInvalidRegister(false);
     setAttr(event.target.value);
   };
-
   return (
     <form onSubmit={ (event) => event.preventDefault() }>
       {console.log(dataTestIds)}
@@ -75,9 +70,7 @@ function FormRegister(props) {
     </form>
   );
 }
-
 export default FormRegister;
-
 FormRegister.propTypes = {
   dataTestIds: PropTypes.objectOf(PropTypes.string).isRequired,
   onSubmitRegister: PropTypes.func.isRequired,
