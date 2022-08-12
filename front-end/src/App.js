@@ -7,12 +7,14 @@ import Register from './pages/Register';
 import CostumerProduct from './pages/CostumerProduct';
 import CustomerCheckout from './pages/CustomerCheckout';
 import Admin from './pages/Admin';
+import SellerOrders from './pages/SellerOrders';
 
 function App() {
   return (
     <Routes>
       <Route exact path="/" element={ <Navigate to="/login" replace /> } />
       <Route exact path="/login" element={ <Login /> } />
+      <Route exact path="/seller/orders" element={ <SellerOrders /> } />
       <Route exact path="/register" element={ <Register /> } />
       <Route exact path="/customer/products" element={ <CostumerProduct /> } />
       <Route exact path="/customer/checkout" element={ <CustomerCheckout /> } />
