@@ -22,7 +22,7 @@ function createToken(user) {
   return token;
 }
 
-const validateNameOrEmail = (name, email) => {
+const findByEmailOrName = (name, email) => {
   const user = User.findOne({ where: { [Op.or]: [{ email }, { name }] } });
   return user;
 };
@@ -31,5 +31,5 @@ module.exports = {
   validateLogin,
   createUser,
   createToken,
-  validateNameOrEmail,
+  findByEmailOrName,
 };
