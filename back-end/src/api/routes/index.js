@@ -8,7 +8,7 @@ const route = Router();
 
 route.use('/product', product);
 route.use('/admin/manage', admin);
-route.use('/seller/orders', sales);
+route.use('/sales', sales);
 route.use('/', user);
 
 module.exports = route;

@@ -20,7 +20,7 @@ const createCustomer = async (req, res, _next) => {
 
 const validateUser = async (req, _res, next) => {
   const { email, name } = req.body;
-  const user = await service.validateNameOrEmail(name, email);
+  const user = await service.findByEmailOrName(name, email);
   if (user) next(statusMessage(409, 'Already registered'));
   next();
 };
@@ -31,9 +31,16 @@ const createAdmin = async (req, _res, next) => {
   return next(statusMessage(201, createdUser));
 };
 
+const getIdFromUser = async (req, res, _next) => {
+  const { email, name } = req.body;
+  const user = await service.findByEmailOrName(name, email);
+  return res.status(200).json({ id: user.id });
+};
+
 module.exports = {
   validateLogin,
   createCustomer,
   validateUser,
   createAdmin,
+  getIdFromUser,
 };
