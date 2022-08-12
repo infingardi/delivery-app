@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 import CardProduct from '../components/CardProduct';
 import NavBar from '../components/Navbar';
 
 function CostumerProduct() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [disable, setDisable] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const getProducts = async () => {
@@ -22,7 +25,12 @@ function CostumerProduct() {
       total += quantity * price;
     });
 
+    setDisable(!total);
     setTotalPrice(total);
+  };
+
+  const handleCheckout = () => {
+    navigate('/customer/checkout');
   };
 
   const renderCards = () => products.map(({ id, name, price, urlImage }) => (
@@ -46,9 +54,13 @@ function CostumerProduct() {
       { renderCards() }
       <button
         type="button"
-        data-testid="customer_products__checkout-bottom-value"
+        onClick={ () => handleCheckout() }
+        disabled={ disable }
+        data-testid="customer_products__button-cart"
       >
-        { totalPrice.toFixed(2).replace('.', ',') }
+        <p data-testid="customer_products__checkout-bottom-value">
+          { totalPrice.toFixed(2).replace('.', ',') }
+        </p>
       </button>
     </main>
   );
