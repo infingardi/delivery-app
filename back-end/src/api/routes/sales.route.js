@@ -3,7 +3,7 @@ const SalesController = require('../controller/Sales.controller');
 
 const sales = Router();
 
-sales.get('/seller', SalesController.getAllSalesSeller);
-sales.get('/customer', SalesController.getAllSalesUser);
+sales.post('/seller', SalesController.getAllSalesSeller);
+sales.post('/customer', SalesController.getAllSalesUser);
 
 module.exports = sales;
