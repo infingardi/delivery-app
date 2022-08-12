@@ -14,16 +14,14 @@ function CustomerOrders() {
 
     const getPurchases = async () => {
       const resId = await axios
-        .get('http://localhost:3000/userid', {
+        .post('http://localhost:3000/userid', {
           email: userData.email,
           name: userData.user,
         });
-      console.log(resId);
       const resPurchases = await axios
-        .get('http://localhost:3000/purchases', {
+        .post('http://localhost:3000/orders/customer', {
           id: resId.data.id,
         });
-      console.log(resPurchases);
 
       setPurchases(resPurchases.data);
     };
@@ -34,12 +32,12 @@ function CustomerOrders() {
     <main>
       <NavBarCustomer user={ user } />
       <h1>Customer Purchase</h1>
-      {purchases.map((p, index) => (
-        <div key={ index }>
-          <p>{index}</p>
-          <p>{p.name}</p>
-          <p>{p.totalPrice}</p>
-          <p>{p.status}</p>
+      {purchases.map((p) => (
+        <div key={ p.id }>
+          <p data-testid="">{p.id}</p>
+          <p data-testid="">{p.name}</p>
+          <p data-testid="">{p.totalPrice}</p>
+          <p data-testid="">{p.status}</p>
         </div>
       ))}
     </main>
