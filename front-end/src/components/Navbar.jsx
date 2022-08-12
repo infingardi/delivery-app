@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import LinkHeader from './LinkHeader';
 
 function NavBar() {
+  const [name, setName] = useState('');
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
 
+    setName(user.name);
   }, []);
   return (
     <nav>
@@ -21,7 +24,7 @@ function NavBar() {
       />
 
       <LinkHeader
-        name="Nome"
+        name={ name }
         path="/profile"
         testid="customer_products__element-navbar-user-full-name"
       />

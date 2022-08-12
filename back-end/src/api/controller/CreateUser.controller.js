@@ -1,5 +1,5 @@
 const { statusMessage } = require('../utils/functions');
-const { validateLogin, createToken } = require('../services/User.service');
+const { createUser, validateLogin, createToken } = require('../services/CreateUser.service');
 
 const validateLoginController = async (req, res, next) => {
   const { email, password } = req.body;
@@ -10,6 +10,13 @@ const validateLoginController = async (req, res, next) => {
   return res.status(200).json({ ...user, token });
 };
 
+const createAdmin = async (req, _res, next) => {
+  const { name, email, password, role } = req.body;
+  const createdUser = createUser(name, email, password, role);
+  return next(statusMessage(201, createdUser));
+};
+
 module.exports = {
   validateLoginController,
+  createAdmin,
 };
