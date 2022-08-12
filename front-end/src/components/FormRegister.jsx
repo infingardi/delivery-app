@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 
 function FormRegister(props) {
   const { dataTestIds, onSubmitRegister } = props;
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validRegister, setValidRegister] = useState(true);
   const [invalidRegister, setInvalidRegister] = useState(false);
-
   useEffect(() => {
     const validateFields = () => {
       const minNameLength = 11;
@@ -21,15 +19,12 @@ function FormRegister(props) {
       }
       setValidRegister(true);
     };
-
     validateFields();
   }, [email, password, name]);
-
   const handleChange = (event, setAttr) => {
     setInvalidRegister(false);
     setAttr(event.target.value);
   };
-
   return (
     <form onSubmit={ (event) => event.preventDefault() }>
       {console.log(dataTestIds)}
@@ -60,9 +55,9 @@ function FormRegister(props) {
           value={ password }
           onChange={ (e) => handleChange(e, setPassword) }
           placeholder="*********"
+          data-testid="admin_manage__input-password"
         />
       </label>
-
       <button
         data-testid="admin_manage__button-register"
         type="submit"
@@ -71,14 +66,11 @@ function FormRegister(props) {
       >
         CADASTRAR
       </button>
-      { invalidRegister
-      && (<h2 data-testid={ dataTestIds.invalidFields }>Dados inválidos</h2>) }
+      { invalidRegister && <h2>Dados inválidos</h2> }
     </form>
   );
 }
-
 export default FormRegister;
-
 FormRegister.propTypes = {
   dataTestIds: PropTypes.objectOf(PropTypes.string).isRequired,
   onSubmitRegister: PropTypes.func.isRequired,

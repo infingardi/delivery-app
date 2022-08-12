@@ -17,7 +17,7 @@ async function createUser(name, email, password, role) {
   await User.create({ name, email, password: md5Password, role });
 }
 
-function createToken(user) {
+function createToken(user) { 
   const token = jwt.sign({ ...user }, 'secret_key');
   return token;
 }

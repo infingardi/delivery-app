@@ -15,6 +15,7 @@ export default function Admin() {
   useEffect(() => {
     const verifyRole = () => {
       const user = getLocalStorage('user');
+      if (!user) return navigate('/');
       if (user.role !== 'administrator') return navigate('/');
     };
     verifyRole();
