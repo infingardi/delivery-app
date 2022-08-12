@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 // import { useHistory } from 'react-router-dom';
 import NavBarSeller from '../components/NavBarSellers';
 
@@ -6,9 +7,9 @@ function SellerOrders() {
   const [sales, setSales] = useState([]);
 
   useEffect(() => {
-    const getSales = async () => axios.get('localhost:3001/seller/orders');
-    console.log('entrou');
-    setSales(getSales());
+    axios
+      .get('localhost:3001/seller/orders')
+      .then((response) => setSales(response.data));
   }, []);
   return (
     <main>

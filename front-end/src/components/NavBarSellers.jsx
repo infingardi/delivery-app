@@ -13,6 +13,7 @@ function NavbarSeller() {
 
   useEffect(() => {
     const obj = getLocalStorage('user');
+    if (!obj) navigate('/');
     setSellerName(obj.name);
   }, []);
 
