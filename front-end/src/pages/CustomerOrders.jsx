@@ -1,7 +1,7 @@
 import axios from 'axios';
 import NavBarCustomer from '../components/NavBarCustomer';
 
-function CustomerPurchase() {
+function CustomerOrders() {
   const [user, setUser] = useState();
   const [purchases, setPurchases] = useState();
 
@@ -9,13 +9,24 @@ function CustomerPurchase() {
     const userData = getLocalStorage('user');
     if (!userData) return navigate('/');
     setUser(userData.name);
-    axios
-      .get('http://localhost:3000/customer/orders', {
-        email,
-        name: user,
-      })
-      .then((response) => setPurchases(response));
-  });
+
+    const getPurchases = async () => {
+      const resId = await axios
+        .get('http://localhost:3000/userid', {
+          email: userData.email,
+          name: userData.user,
+        });
+      console.log(resId);
+      const resPurchases = await axios
+        .get('http://localhost:3000/purchases', {
+          id: resId.data.id,
+        });
+      console.log(resPurchases);
+
+      setPurchases(resPurchases.data);
+    };
+    getPurchases();
+  }, []);
 
   return (
     <main>
@@ -34,4 +45,4 @@ function CustomerPurchase() {
   );
 }
 
-export default CustomerPurchase;
+export default CustomerOrders;
