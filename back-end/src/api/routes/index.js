@@ -11,6 +11,7 @@ route.use('/product', product);
 route.use('/admin/manage', admin);
 route.use('/orders', sales);
 route.use('/seller', seller);
+route.use('/sales', sales);
 route.use('/', user);
 
 module.exports = route;
