@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function FormRegister(props) {
-  const { dataTestIds, onSubmitRegister } = props;
+  const { onSubmitRegister } = props;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
   const [validRegister, setValidRegister] = useState(true);
   const [invalidRegister, setInvalidRegister] = useState(false);
+
   useEffect(() => {
     const validateFields = () => {
       const minNameLength = 11;
@@ -20,17 +22,27 @@ function FormRegister(props) {
       setValidRegister(true);
     };
     validateFields();
-  }, [email, password, name]);
+  }, [email, password, name, role]);
+
   const handleChange = (event, setAttr) => {
     setInvalidRegister(false);
     setAttr(event.target.value);
   };
+
+  const handleDelete = () => {
+    onSubmitRegister(name, email, password, role);
+    setName('');
+    setEmail('');
+    setPassword('');
+  };
+
   return (
     <form onSubmit={ (event) => event.preventDefault() }>
-      {console.log(dataTestIds)}
       <h2>Cadastrar novo usuário</h2>
       <label htmlFor="Input-name">
+        Nome
         <input
+          label="Nome"
           className="cadastro-nome"
           value={ name }
           onChange={ (e) => handleChange(e, setName) }
@@ -39,7 +51,9 @@ function FormRegister(props) {
         />
       </label>
       <label htmlFor="Input-email">
+        Email
         <input
+          label="Email"
           className="cadastro-email"
           type="email"
           value={ email }
@@ -49,7 +63,9 @@ function FormRegister(props) {
         />
       </label>
       <label htmlFor="Input-password">
+        Senha
         <input
+          label="Senha"
           className="cadastro-password"
           type="password"
           value={ password }
@@ -58,10 +74,21 @@ function FormRegister(props) {
           data-testid="admin_manage__input-password"
         />
       </label>
+      <label htmlFor="Select-type">
+        <select
+          label="Tipo"
+          data-testid="admin_manage__select-role"
+          onChange={ (e) => setRole(e.target.value) }
+        >
+          <option value="administrator">Administrador</option>
+          <option value="seller">Vendedor</option>
+          <option value="customer">Cliente</option>
+        </select>
+      </label>
       <button
         data-testid="admin_manage__button-register"
         type="submit"
-        onClick={ () => onSubmitRegister(name, email, password) }
+        onClick={ () => handleDelete() }
         disabled={ validRegister }
       >
         CADASTRAR
@@ -72,6 +99,5 @@ function FormRegister(props) {
 }
 export default FormRegister;
 FormRegister.propTypes = {
-  dataTestIds: PropTypes.objectOf(PropTypes.string).isRequired,
   onSubmitRegister: PropTypes.func.isRequired,
 };
