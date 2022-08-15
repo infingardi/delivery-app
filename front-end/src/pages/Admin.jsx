@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { getLocalStorage } from '../services/localStorage';
@@ -21,22 +20,6 @@ export default function Admin() {
     // setUsers(getUsers());
   }, []);
 
-  const onSubmitRegister = async (nameRegs, emailRegs, passwordRegs, roleRegs) => {
-    await axios({
-      method: 'post',
-      url,
-      headers: {
-        authorization: token,
-      },
-      data: {
-        name: nameRegs,
-        email: emailRegs,
-        password: passwordRegs,
-        role: roleRegs,
-      },
-    });
-  };
-
   // const onDeleteUser = async (nameDlt, passwordlDlt) => {
   //   await axios.delete(url, {
   //     name: nameDlt,
@@ -47,7 +30,7 @@ export default function Admin() {
   return (
     <main>
       <section className="Formulário cadastro">
-        <FormRegister onSubmitRegister={ onSubmitRegister } />
+        <FormRegister />
       </section>
       {/* <table>
         { users

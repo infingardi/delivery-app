@@ -1,14 +1,18 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { getLocalStorage } from '../services/localStorage';
 
-function FormRegister(props) {
-  const { onSubmitRegister } = props;
+function FormRegister() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [validRegister, setValidRegister] = useState(true);
   const [invalidRegister, setInvalidRegister] = useState(false);
+
+  const { token } = getLocalStorage('user');
+
+  const url = 'http://localhost:3001/admin/manage/register';
 
   useEffect(() => {
     const validateFields = () => {
@@ -29,8 +33,21 @@ function FormRegister(props) {
     setAttr(event.target.value);
   };
 
+  const onSubmitRegister = async () => {
+    await axios({
+      method: 'post',
+      url,
+      headers: {
+        authorization: token,
+      },
+      data: { name, email, password, role },
+    }).catch(() => {
+      setInvalidRegister(true);
+    });
+  };
+
   const handleDelete = () => {
-    onSubmitRegister(name, email, password, role);
+    onSubmitRegister();
     setName('');
     setEmail('');
     setPassword('');
@@ -93,11 +110,13 @@ function FormRegister(props) {
       >
         CADASTRAR
       </button>
-      { invalidRegister && <h2>Dados inválidos</h2> }
+      { invalidRegister && (
+        <span
+          data-testid="admin_manage__element-invalid-register"
+        >
+          Cadastro duplicado!
+        </span>)}
     </form>
   );
 }
 export default FormRegister;
-FormRegister.propTypes = {
-  onSubmitRegister: PropTypes.func.isRequired,
-};
