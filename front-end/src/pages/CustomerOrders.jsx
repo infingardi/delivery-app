@@ -1,10 +1,12 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import NavBarCustomer from '../components/NavBarCustomer';
+import { getLocalStorage } from '../services/localStorage';
 
 function CustomerOrders() {
-  const [user, setUser] = useState();
-  const [purchases, setPurchases] = useState();
+  const [user, setUser] = useState('');
+  const [purchases, setPurchases] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,17 +16,14 @@ function CustomerOrders() {
 
     const getPurchases = async () => {
       const resId = await axios
-        .get('http://localhost:3000/userid', {
+        .post('http://localhost:3001/userid', {
           email: userData.email,
-          name: userData.user,
+          name: userData.name,
         });
-      console.log(resId);
       const resPurchases = await axios
-        .get('http://localhost:3000/purchases', {
+        .post('http://localhost:3001/sales/customer', {
           id: resId.data.id,
         });
-      console.log(resPurchases);
-
       setPurchases(resPurchases.data);
     };
     getPurchases();
@@ -34,14 +33,24 @@ function CustomerOrders() {
     <main>
       <NavBarCustomer user={ user } />
       <h1>Customer Purchase</h1>
-      {purchases.map((p, index) => (
-        <div key={ index }>
-          <p>{index}</p>
-          <p>{p.name}</p>
-          <p>{p.totalPrice}</p>
-          <p>{p.status}</p>
-        </div>
+      {purchases.map((p) => (
+        <Link
+          to={ `${p.id}` }
+          key={ p.id }
+        >
+          <p data-testid={ `customer_orders__element-order-id-${p.id}` }>{p.id}</p>
+          <p data-testid={ `customer_orders__element-order-date-${p.id}` }>
+            {p.saleDate}
+          </p>
+          <p data-testid={ `customer_orders__element-card-price-${p.id}` }>
+            {p.totalPrice}
+          </p>
+          <p data-testid={ `customer_orders__element-delivery-status-${p.id}` }>
+            {p.status}
+          </p>
+        </Link>
       ))}
+
     </main>
   );
 }
