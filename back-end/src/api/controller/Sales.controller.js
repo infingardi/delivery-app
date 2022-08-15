@@ -15,17 +15,23 @@ const getAllSalesSeller = async (req, res, _next) => {
 };
 
 const createSale = async (req, res, _next) => {
-    const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status, cart } = req.body;
+    const {
+        userId,
+        sellerId,
+        totalPrice,
+        deliveryAddress,
+        deliveryNumber,
+        saleDate, status, cart } = req.body;
 
     const sale = await SalesController.createSale(
-        userId,
+        { userId,
         sellerId,
         totalPrice,
         deliveryAddress,
         deliveryNumber,
         saleDate,
         status,
-        cart
+        cart },
     );
 
     return res.status(201).json(sale);
@@ -34,5 +40,5 @@ const createSale = async (req, res, _next) => {
 module.exports = {
     getAllSalesUser,
     getAllSalesSeller,
-    createSale
+    createSale,
 };

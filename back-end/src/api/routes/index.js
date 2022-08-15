@@ -3,7 +3,7 @@ const user = require('./users.route');
 const product = require('./products.route');
 const admin = require('./admin.route');
 const sales = require('./sales.route');
-const seller = require('./seller.route')
+const seller = require('./seller.route');
 
 const route = Router();
 

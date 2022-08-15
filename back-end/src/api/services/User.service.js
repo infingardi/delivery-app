@@ -38,5 +38,5 @@ module.exports = {
   createUser,
   createToken,
   findByEmailOrName,
-  getAllSellers
+  getAllSellers,
 };

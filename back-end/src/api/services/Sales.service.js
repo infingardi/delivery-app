@@ -10,20 +10,21 @@ async function getAllSalesCustomer(id) {
     return sales;
 }
 
-async function createSale(userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status, cart) {
+async function createSale({
+    userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status, cart }) {
     const obj = {
         userId,
-        sellerId: sellerId,
+        sellerId,
         totalPrice,
         deliveryAddress,
         deliveryNumber,
         saleDate,
-        status
-    }
-    const sale = await Sale.create({...obj});
-    Object.values(cart).forEach(async ({id, quantity}) => {
-        await SalesProduct.create({ saleId: sale.dataValues.id, productId: id, quantity});
-    })
+        status,
+    };
+    const sale = await Sale.create({ ...obj });
+    Object.values(cart).forEach(async ({ id, quantity }) => {
+        await SalesProduct.create({ saleId: sale.dataValues.id, productId: id, quantity });
+    });
     return sale;
 }
 
