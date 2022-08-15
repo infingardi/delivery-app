@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react';
 import NavBarCustomer from '../components/NavBarCustomer';
 import { getLocalStorage } from '../services/localStorage';
 
-function ProductDetail() {
-  const [{ saleOrder, sales }, setOrder] = useState({ saleOrder: {}, sales: [] });
+function OrderDetail() {
+  const [{ saleOrder, sales }, setOrder] = useState(
+    { saleOrder: { seller: {} }, sales: [] },
+  );
   const nameUser = getLocalStorage('user').name;
   useEffect(() => {
     const noMagicNumber = 17;
@@ -17,7 +19,7 @@ function ProductDetail() {
   return (
     <main>
       <NavBarCustomer user={ nameUser } />
-      {console.log(saleOrder, sales)}
+      {console.log({ saleOrder, sales })}
       <h2
         data-testid="customer_order_details__element-order-details-label-order-id"
       >
@@ -27,7 +29,7 @@ function ProductDetail() {
       <h2
         data-testid="customer_order_details__element-order-details-label-seller-name"
       >
-        {nameUser}
+        {saleOrder.seller.name}
 
       </h2>
       <h2
@@ -86,7 +88,7 @@ function ProductDetail() {
               `customer_order_details__element-order-table-sub-total-${index}`
             }
           >
-            {Number(s.product.price) * Number(quantity)}
+            {Number(s.product.price) * Number(s.quantity)}
 
           </p>
         </div>
@@ -95,4 +97,4 @@ function ProductDetail() {
   );
 }
 
-export default ProductDetail;
+export default OrderDetail;

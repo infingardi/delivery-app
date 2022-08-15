@@ -9,7 +9,7 @@ import CustomerCheckout from './pages/CustomerCheckout';
 import CustomerOrders from './pages/CustomerOrders';
 import Admin from './pages/Admin';
 import SellerOrders from './pages/SellerOrders';
-import ProductDetail from './pages/ProductDetail';
+import OrderDetail from './pages/OrderDetail';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
       <Route exact path="/register" element={ <Register /> } />
       <Route exact path="/customer/products" element={ <CostumerProduct /> } />
       <Route exact path="/customer/orders" element={ <CustomerOrders /> } />
-      <Route exact path="/customer/orders/:id" element={ <ProductDetail /> } />
+      <Route exact path="/customer/orders/:id" element={ <OrderDetail /> } />
       <Route exact path="/customer/checkout" element={ <CustomerCheckout /> } />
       <Route exact path="/admin/manage" element={ <Admin /> } />
     </Routes>
