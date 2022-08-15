@@ -20,4 +20,8 @@ async function getOrder(id) {
     return sale;
 }
 
-module.exports = { getAllSalesSeller, getAllSalesCustomer, getOrder };
+async function updateStatus(id, status) {
+    await Sale.update({ status }, { where: { id } });
+}
+
+module.exports = { getAllSalesSeller, getAllSalesCustomer, getOrder, updateStatus };

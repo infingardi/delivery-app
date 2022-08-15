@@ -22,8 +22,16 @@ const getOrderAndProducts = async (req, res, _next) => {
     return res.status(200).json({ saleOrder, sales });
 };
 
+const updateStatus = async (req, res, _next) => {
+    const { status } = req.body;
+    const { id } = req.params;
+    await SalesService.updateStatus(id, status);
+    return res.status(204).json({ message: 'Success' });
+};
+
 module.exports = {
     getAllSalesUser,
     getAllSalesSeller,
     getOrderAndProducts,
+    updateStatus,
 };

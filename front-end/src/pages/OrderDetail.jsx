@@ -8,18 +8,28 @@ function OrderDetail() {
     { saleOrder: { seller: {} }, sales: [] },
   );
   const nameUser = getLocalStorage('user').name;
+  const sliceString = 17;
+  const id = window.location.pathname.slice(sliceString);
   useEffect(() => {
-    const noMagicNumber = 17;
-    const id = window.location.pathname.slice(noMagicNumber);
-
-    axios
+    const getOrder = async () => axios
       .get(`http://localhost:3001/sales/${id}`)
       .then((response) => setOrder(response.data));
+    getOrder();
+  }, []);
+
+  const onArrivedOrder = () => {
+    axios
+      .put(`http://localhost:3001/sales/${id}`, {
+        status: 'delivered',
+      });
+  };
+
+  useEffect(() => {
+
   }, []);
   return (
     <main>
       <NavBarCustomer user={ nameUser } />
-      {console.log({ saleOrder, sales })}
       <h2
         data-testid="customer_order_details__element-order-details-label-order-id"
       >
@@ -50,6 +60,13 @@ function OrderDetail() {
         {saleOrder.totalPrice}
 
       </h2>
+      <button
+        onClick={ onArrivedOrder }
+        type="button"
+        data-testid="customer_order_details__button-delivery-check"
+      >
+        Marcar como entregue
+      </button>
       {sales.map((s, index) => (
         <div key={ s.id }>
 
