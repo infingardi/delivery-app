@@ -14,7 +14,25 @@ const getAllSalesSeller = async (req, res, _next) => {
     return res.status(200).json(sales);
 };
 
+const createSale = async (req, res, _next) => {
+    const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status, cart } = req.body;
+
+    const sale = await SalesController.createSale(
+        userId,
+        sellerId,
+        totalPrice,
+        deliveryAddress,
+        deliveryNumber,
+        saleDate,
+        status,
+        cart
+    );
+
+    return res.status(201).json(sale);
+};
+
 module.exports = {
     getAllSalesUser,
     getAllSalesSeller,
+    createSale
 };
