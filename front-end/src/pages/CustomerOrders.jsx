@@ -1,10 +1,12 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import NavBarCustomer from '../components/NavBarCustomer';
+import { getLocalStorage } from '../services/localStorage';
 
 function CustomerOrders() {
-  const [user, setUser] = useState();
-  const [purchases, setPurchases] = useState();
+  const [user, setUser] = useState('');
+  const [purchases, setPurchases] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,15 +16,14 @@ function CustomerOrders() {
 
     const getPurchases = async () => {
       const resId = await axios
-        .post('http://localhost:3000/userid', {
+        .post('http://localhost:3001/userid', {
           email: userData.email,
-          name: userData.user,
+          name: userData.name,
         });
       const resPurchases = await axios
-        .post('http://localhost:3000/orders/customer', {
+        .post('http://localhost:3001/sales/customer', {
           id: resId.data.id,
         });
-
       setPurchases(resPurchases.data);
     };
     getPurchases();
@@ -33,13 +34,23 @@ function CustomerOrders() {
       <NavBarCustomer user={ user } />
       <h1>Customer Purchase</h1>
       {purchases.map((p) => (
-        <div key={ p.id }>
-          <p data-testid="">{p.id}</p>
-          <p data-testid="">{p.name}</p>
-          <p data-testid="">{p.totalPrice}</p>
-          <p data-testid="">{p.status}</p>
-        </div>
+        <Link
+          to={ `${p.id}` }
+          key={ p.id }
+        >
+          <p data-testid={ `customer_orders__element-order-id-${p.id}` }>{p.id}</p>
+          <p data-testid={ `customer_orders__element-order-date-${p.id}` }>
+            {p.saleDate}
+          </p>
+          <p data-testid={ `customer_orders__element-card-price-${p.id}` }>
+            {p.totalPrice}
+          </p>
+          <p data-testid={ `customer_orders__element-delivery-status-${p.id}` }>
+            {p.status}
+          </p>
+        </Link>
       ))}
+
     </main>
   );
 }

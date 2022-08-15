@@ -10,7 +10,7 @@ function NavBarCustomer(props) {
       <h2>Meus Pedidos</h2>
       <h2>Produtos</h2>
       <h2>{user}</h2>
-      <button type="button" onClick={ navigate('/') }>
+      <button type="button" onClick={ () => navigate('/') }>
         Sair
       </button>
     </header>
