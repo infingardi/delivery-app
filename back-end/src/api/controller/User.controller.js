@@ -19,7 +19,6 @@ const createCustomer = async (req, res, _next) => {
 
 const createAdmin = async (req, res, _next) => {
   const { name, email, password, role } = req.body;
-  console.log(req.body);
   await service.createUser(name, email, password, role);
   const token = service.createToken({ name, email, password, role });
 
