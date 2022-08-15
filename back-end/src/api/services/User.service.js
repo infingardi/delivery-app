@@ -8,8 +8,8 @@ async function validateLogin(emailLogin, password) {
   const user = await User.findOne({ where: { email: emailLogin, password: convertedPassword } });
   if (!user) return null;
 
-  const { email, name, role } = user;
-  return { email, name, role };
+  const { email, name, role, id } = user;
+  return { email, name, role, id };
 }
 
 async function createUser(name, email, password, role) {
@@ -22,14 +22,21 @@ function createToken(user) {
   return token;
 }
 
-const validateNameOrEmail = (name, email) => {
+const findByEmailOrName = (name, email) => {
   const user = User.findOne({ where: { [Op.or]: [{ email }, { name }] } });
   return user;
 };
+
+async function getAllSellers() {
+  const users = await User.findAll({ where: { role: 'seller' } });
+
+  return users;
+}
 
 module.exports = {
   validateLogin,
   createUser,
   createToken,
-  validateNameOrEmail,
+  findByEmailOrName,
+  getAllSellers,
 };

@@ -31,6 +31,8 @@ function CostumerProduct() {
 
   const handleCheckout = () => {
     navigate('/customer/checkout');
+
+    localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
   };
 
   const renderCards = () => products.map(({ id, name, price, urlImage }) => (
