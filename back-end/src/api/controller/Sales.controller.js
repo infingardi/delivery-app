@@ -14,7 +14,15 @@ const getAllSalesSeller = async (req, res, _next) => {
     return res.status(200).json(sales);
 };
 
+const getSale = async (req, res, _next) => {
+    const { id } = req.params;
+    const sale = await SalesController.getSale(id);
+
+    return res.status(200).json(sale);
+};
+
 module.exports = {
     getAllSalesUser,
     getAllSalesSeller,
+    getSale,
 };
