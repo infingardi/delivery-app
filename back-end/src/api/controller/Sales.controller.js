@@ -1,28 +1,29 @@
-const SalesController = require('../services/Sales.service');
+const SalesService = require('../services/Sales.service');
+const SalesProductService = require('../services/SalesProduct.service');
 
 const getAllSalesUser = async (req, res, _next) => {
     const { id } = req.body;
-    const sales = await SalesController.getAllSalesCustomer(id);
+    const sales = await SalesService.getAllSalesCustomer(id);
 
     return res.status(200).json(sales);
 };
 
 const getAllSalesSeller = async (req, res, _next) => {
     const { id } = req.body;
-    const sales = await SalesController.getAllSalesSeller(id);
+    const sales = await SalesService.getAllSalesSeller(id);
 
     return res.status(200).json(sales);
 };
 
-const getSale = async (req, res, _next) => {
+const getOrderAndProducts = async (req, res, _next) => {
     const { id } = req.params;
-    const sale = await SalesController.getSale(id);
-
-    return res.status(200).json(sale);
+    const saleOrder = await SalesService.getOrder(id);
+    const sales = await SalesProductService.getSalesProducts(id);
+    return res.status(200).json({ saleOrder, sales });
 };
 
 module.exports = {
     getAllSalesUser,
     getAllSalesSeller,
-    getSale,
+    getOrderAndProducts,
 };
