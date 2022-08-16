@@ -4,11 +4,16 @@ import PropTypes from 'prop-types';
 
 function LinkHeader({ name, path, testid }) {
   const navigate = useNavigate();
+  const clearLocalStorage = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('carrinho');
+    return navigate(path);
+  };
   return (
     <li>
       <button
         type="button"
-        onClick={ () => navigate(path) }
+        onClick={ () => (name === 'Sair' ? clearLocalStorage() : navigate(path)) }
         data-testid={ testid }
       >
         { name }

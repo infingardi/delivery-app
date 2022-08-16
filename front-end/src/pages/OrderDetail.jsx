@@ -70,7 +70,7 @@ function OrderDetail() {
       </h2>
       <button
         onClick={ onArrivedOrder }
-        disabled
+        disabled // </main>={ arrivedOrder }
         type="button"
         data-testid="customer_order_details__button-delivery-check"
       >
