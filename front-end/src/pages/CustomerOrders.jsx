@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import NavBarCustomer from '../components/NavBarCustomer';
 import { getLocalStorage } from '../services/localStorage';
+import formatDate from '../services/functions';
 
 function CustomerOrders() {
   const [user, setUser] = useState('');
@@ -40,10 +41,10 @@ function CustomerOrders() {
         >
           <p data-testid={ `customer_orders__element-order-id-${p.id}` }>{p.id}</p>
           <p data-testid={ `customer_orders__element-order-date-${p.id}` }>
-            {p.saleDate}
+            {formatDate(p.saleDate)}
           </p>
           <p data-testid={ `customer_orders__element-card-price-${p.id}` }>
-            {p.totalPrice}
+            {p.totalPrice.replace('.', ',')}
           </p>
           <p data-testid={ `customer_orders__element-delivery-status-${p.id}` }>
             {p.status}
