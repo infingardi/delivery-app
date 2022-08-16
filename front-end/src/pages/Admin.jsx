@@ -1,17 +1,6 @@
-// import { useEffect } from 'react';
-// import { getLocalStorage } from '../services/localStorage';
 import FormRegister from '../components/FormRegister';
 
 export default function Admin() {
-  // useEffect(() => {
-  //   const verifyRole = () => {
-  //     const localUser = getLocalStorage('user');
-  //     setToken(localUser.token);
-  //   };
-
-  //   verifyRole();
-  // }, []);
-
   return (
     <main>
       <section className="Formulário cadastro">
