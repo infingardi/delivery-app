@@ -34,6 +34,12 @@ function NavBar() {
         path="/login"
         testid="customer_products__element-navbar-link-logout"
       />
+
+      <LinkHeader
+        name="Gerenciar usuários"
+        path="/admin/manage"
+      />
+
     </nav>
   );
 }

@@ -29,6 +29,12 @@ function CustomerOrders() {
     getPurchases();
   }, []);
 
+  const formatDate = (date) => {
+    const noMagic = 10;
+    const d = date.slice(0, noMagic).split('');
+    return `${d[8]}${d[9]}/${d[5]}${d[6]}/${d[0]}${d[1]}${d[2]}${d[3]}`;
+  };
+
   return (
     <main>
       <NavBarCustomer user={ user } />
@@ -40,10 +46,10 @@ function CustomerOrders() {
         >
           <p data-testid={ `customer_orders__element-order-id-${p.id}` }>{p.id}</p>
           <p data-testid={ `customer_orders__element-order-date-${p.id}` }>
-            {p.saleDate}
+            {formatDate(p.saleDate)}
           </p>
           <p data-testid={ `customer_orders__element-card-price-${p.id}` }>
-            {p.totalPrice}
+            {p.totalPrice.replace('.', ',')}
           </p>
           <p data-testid={ `customer_orders__element-delivery-status-${p.id}` }>
             {p.status}

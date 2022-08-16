@@ -1,13 +1,19 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { getLocalStorage } from '../services/localStorage';
 
-function FormRegister(props) {
-  const { dataTestIds, onSubmitRegister } = props;
+function FormRegister() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
   const [validRegister, setValidRegister] = useState(true);
   const [invalidRegister, setInvalidRegister] = useState(false);
+
+  const { token } = getLocalStorage('user');
+
+  const url = 'http://localhost:3001/admin/manage/register';
+
   useEffect(() => {
     const validateFields = () => {
       const minNameLength = 11;
@@ -20,17 +26,40 @@ function FormRegister(props) {
       setValidRegister(true);
     };
     validateFields();
-  }, [email, password, name]);
+  }, [email, password, name, role]);
+
   const handleChange = (event, setAttr) => {
     setInvalidRegister(false);
     setAttr(event.target.value);
   };
+
+  const onSubmitRegister = async () => {
+    await axios({
+      method: 'post',
+      url,
+      headers: {
+        authorization: token,
+      },
+      data: { name, email, password, role },
+    }).catch(() => {
+      setInvalidRegister(true);
+    });
+  };
+
+  const handleDelete = () => {
+    onSubmitRegister();
+    setName('');
+    setEmail('');
+    setPassword('');
+  };
+
   return (
     <form onSubmit={ (event) => event.preventDefault() }>
-      {console.log(dataTestIds)}
       <h2>Cadastrar novo usuário</h2>
       <label htmlFor="Input-name">
+        Nome
         <input
+          label="Nome"
           className="cadastro-nome"
           value={ name }
           onChange={ (e) => handleChange(e, setName) }
@@ -39,7 +68,9 @@ function FormRegister(props) {
         />
       </label>
       <label htmlFor="Input-email">
+        Email
         <input
+          label="Email"
           className="cadastro-email"
           type="email"
           value={ email }
@@ -49,7 +80,9 @@ function FormRegister(props) {
         />
       </label>
       <label htmlFor="Input-password">
+        Senha
         <input
+          label="Senha"
           className="cadastro-password"
           type="password"
           value={ password }
@@ -58,20 +91,32 @@ function FormRegister(props) {
           data-testid="admin_manage__input-password"
         />
       </label>
+      <label htmlFor="Select-type">
+        <select
+          label="Tipo"
+          data-testid="admin_manage__select-role"
+          onChange={ (e) => setRole(e.target.value) }
+        >
+          <option value="administrator">Administrador</option>
+          <option value="seller">Vendedor</option>
+          <option value="customer">Cliente</option>
+        </select>
+      </label>
       <button
         data-testid="admin_manage__button-register"
         type="submit"
-        onClick={ () => onSubmitRegister(name, email, password) }
+        onClick={ () => handleDelete() }
         disabled={ validRegister }
       >
         CADASTRAR
       </button>
-      { invalidRegister && <h2>Dados inválidos</h2> }
+      { invalidRegister && (
+        <span
+          data-testid="admin_manage__element-invalid-register"
+        >
+          Cadastro duplicado!
+        </span>)}
     </form>
   );
 }
 export default FormRegister;
-FormRegister.propTypes = {
-  dataTestIds: PropTypes.objectOf(PropTypes.string).isRequired,
-  onSubmitRegister: PropTypes.func.isRequired,
-};

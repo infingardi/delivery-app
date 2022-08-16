@@ -14,7 +14,8 @@ function CardProduct({ name, price, image, id, changeTotalPrice }) {
   useEffect(() => {
     // Cria o localStorage do carrinha de compras, ou cria caso não exista
     const cartJson = JSON.parse(localStorage.getItem('carrinho')) || {};
-    cartJson[name] = { quantity, price };
+    cartJson[name] = { quantity, price, id };
+    if (quantity === 0) delete cartJson[name];
 
     localStorage.setItem('carrinho', JSON.stringify(cartJson));
     changeTotalPrice();

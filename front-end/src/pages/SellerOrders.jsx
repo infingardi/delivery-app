@@ -31,7 +31,7 @@ function SellerOrders() {
       <NavBarSeller />
       <section>
         {sales.map(
-          ({ status, saleDate, deliveryNumber, deliveryAddress, totalPrice }, index) => (
+          ({ status, saleDate, deliveryAddress, totalPrice }, index) => (
             <div key={ index }>
               <h4 data-testid={ `seller_orders__element-order-id-${index + 1}` }>
                 {index}

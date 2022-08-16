@@ -29,9 +29,33 @@ const updateStatus = async (req, res, _next) => {
     return res.status(204).json({ message: 'Success' });
 };
 
+const createSale = async (req, res, _next) => {
+    const {
+        userId,
+        sellerId,
+        totalPrice,
+        deliveryAddress,
+        deliveryNumber,
+        saleDate, status, cart } = req.body;
+
+    const sale = await SalesService.createSale(
+        { userId,
+        sellerId,
+        totalPrice,
+        deliveryAddress,
+        deliveryNumber,
+        saleDate,
+        status,
+        cart },
+    );
+
+    return res.status(201).json(sale);
+};
+
 module.exports = {
     getAllSalesUser,
     getAllSalesSeller,
     getOrderAndProducts,
     updateStatus,
+    createSale,
 };
