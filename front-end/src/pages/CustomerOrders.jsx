@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import NavBarCustomer from '../components/NavBarCustomer';
 import { getLocalStorage } from '../services/localStorage';
+import formatDate from '../services/functions';
 
 function CustomerOrders() {
   const [user, setUser] = useState('');
@@ -28,12 +29,6 @@ function CustomerOrders() {
     };
     getPurchases();
   }, []);
-
-  const formatDate = (date) => {
-    const noMagic = 10;
-    const d = date.slice(0, noMagic).split('');
-    return `${d[8]}${d[9]}/${d[5]}${d[6]}/${d[0]}${d[1]}${d[2]}${d[3]}`;
-  };
 
   return (
     <main>
