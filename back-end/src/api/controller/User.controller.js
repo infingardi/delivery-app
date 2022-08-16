@@ -5,8 +5,7 @@ const validateLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await service.validateLogin(email, password);
   if (!user) return next(statusMessage(404, 'Not found'));
-
-  const token = service.createToken(user);
+  const token = service.createToken(user); 
   return res.status(200).json({ ...user, token });
 };
 
