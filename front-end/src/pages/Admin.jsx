@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
-import { getLocalStorage } from '../services/localStorage';
+// import { useEffect } from 'react';
+// import { getLocalStorage } from '../services/localStorage';
 import FormRegister from '../components/FormRegister';
 
 export default function Admin() {
-  useEffect(() => {
-    const verifyRole = () => {
-      const localUser = getLocalStorage('user');
-      setToken(localUser.token);
-    };
+  // useEffect(() => {
+  //   const verifyRole = () => {
+  //     const localUser = getLocalStorage('user');
+  //     setToken(localUser.token);
+  //   };
 
-    verifyRole();
-  }, []);
+  //   verifyRole();
+  // }, []);
 
   return (
     <main>
@@ -19,8 +19,8 @@ export default function Admin() {
       </section>
       {/* <table>
         { users
-          .map(({ name: nUser, email: eUser, role: rUser }, index) => (
-            <thead key={ eUser }>
+          .map(({ name, email, role }, index) => (
+            <thead key={ email }>
               <p
                 data-testid="admin_manage__element-user-table-item-number"
               >
