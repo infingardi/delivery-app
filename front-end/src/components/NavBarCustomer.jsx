@@ -6,6 +6,11 @@ function NavBarCustomer(props) {
   const { user } = props;
   const navigate = useNavigate();
 
+  function removeLocalStorageAndLogout() {
+    localStorage.clear();
+    navigate('/');
+  }
+
   return (
     <header>
       <Link
@@ -26,7 +31,7 @@ function NavBarCustomer(props) {
       <button
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
-        onClick={ () => navigate('/') }
+        onClick={ removeLocalStorageAndLogout }
       >
         Sair
       </button>

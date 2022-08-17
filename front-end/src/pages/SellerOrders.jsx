@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getLocalStorage } from '../services/localStorage';
 import NavBarSeller from '../components/NavBarSellers';
 
@@ -31,25 +31,24 @@ function SellerOrders() {
       <NavBarSeller />
       <section>
         {sales.map(
-          ({ status, saleDate, deliveryAddress, totalPrice }, index) => (
-            <div key={ index }>
-              <h4 data-testid={ `seller_orders__element-order-id-${index + 1}` }>
-                {index}
+          ({ status, id, saleDate, deliveryAddress, totalPrice }) => (
+            <Link to={ `${id}` } key={ id }>
+              <h4 data-testid={ `seller_orders__element-order-id-${id}` }>
+                {id}
               </h4>
-              <h4 data-testid={ `seller_orders__element-delivery-status-${index + 1}` }>
+              <h4 data-testid={ `seller_orders__element-delivery-status-${id}` }>
                 {status}
               </h4>
-              <h4 data-testid={ `seller_orders__element-order-date-${index + 1}` }>
+              <h4 data-testid={ `seller_orders__element-order-date-${id}` }>
                 {saleDate}
               </h4>
-              {/* <h4 data-testid={``}>{deliveryNumber}</h4> */}
-              <h4 data-testid={ `seller_orders__element-card-address-${index + 1}` }>
+              <h4 data-testid={ `seller_orders__element-card-address-${id}` }>
                 {deliveryAddress}
               </h4>
-              <h4 data-testid={ `seller_orders__element-card-price-${index + 1}` }>
+              <h4 data-testid={ `seller_orders__element-card-price-${id}` }>
                 {totalPrice}
               </h4>
-            </div>
+            </Link>
           ),
         )}
       </section>
