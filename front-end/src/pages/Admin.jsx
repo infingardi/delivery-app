@@ -15,12 +15,12 @@ export default function Admin() {
               >
                 {index + 1}
               </p>
-              <h4>{nUser}</h4>
-              <h4>{eUser}</h4>
-              <h4>{rUser}</h4>
+              <h4>{name}</h4>
+              <h4>{email}</h4>
+              <h4>{role}</h4>
               <button
                 type="submit"
-                onClick={ onDeleteUser(nUser, eUser) }
+                onClick={ onDeleteUser(name, email) }
                 data-testid="admin_manage__element_user-table-remove"
               >
                 EXCLUIR
